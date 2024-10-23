@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RCE Test Page</title>
+</head>
+<body>
+    <h1>RCE Testing Page</h1>
+    <p>This page is for testing Remote Code Execution.</p>
+    <!-- Hackerone: hackerguyarjun -->
+    <script>
+        // Target URL
+        const targetUrl = 'http://cdn-s3.grofers.com:8080/';
+
+        // Function to send a request to the target URL
+        function testRCE() {
+            fetch(targetUrl, {
+                method: 'GET',
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0', // Updated User-Agent
+                    'Accept': '*/*'
+                }
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+                // You can also send the data to your server or log it to see the response
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        // Execute the RCE test
+        testRCE();
+    </script>
+</body>
+</html>
